@@ -30,4 +30,57 @@ def find_duplicate_ips(ips):
         else:
             seen_ips.add(ip)
     return list(duplicates)
+
+def add_ip(ips, new_ip):
+    if new_ip not in ips:
+        ips.append(new_ip)
+        return True
+    return False
+
+ips = []
+
+while True:
+    new_ip = input("Enter an IP address (or 'q' to quit): ").strip()
+
+    # Exit
+    if new_ip.lower() == "q":
+        break
+
+    # Check empty input
+    if not new_ip:
+        print("Empty input! Please enter an IP.")
+        continue
+
+    # Check IP format
+    checked_ip = check_ip_format(new_ip)
+
+    if checked_ip in ("Empty input", "Invalid IP format"):
+        print(checked_ip)
+        print("IP rejected!")
+        continue
+
+    # Validate IP
+    if is_valid_ip(checked_ip):
+        print("Valid IP!")
+
+    # Identify IP version
+    version = get_ip_version(checked_ip)
+    print(f"IP Version: IPv{version}")
+
+    # Check duplicates
+    duplicates = find_duplicate_ips(ips)
+
+    if checked_ip in ips:
+        print("Duplicate IP! Already exists.")
+        continue
+
+    # Add IP
+    result = add_ip(ips, checked_ip)
+
+    if result:
+        print("IP successfully added!")
+
+    print("IP Records:", ips)
+
+print("Final IP Records:", ips)
     

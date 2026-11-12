@@ -1,6 +1,6 @@
 import unittest
 
-from ip_checker.validator import is_valid_ip, get_ip_version, check_ip_format, find_duplicate_ips
+from ip_checker.validator import is_valid_ip, get_ip_version, check_ip_format, find_duplicate_ips, add_ip
 
 class TestIPValidator(unittest.TestCase):
 
@@ -49,3 +49,15 @@ class TestIPValidator(unittest.TestCase):
         ips = ["192.168.1.2", "192.168.1.1", "192.168.1.2", "192.168.1.2"]
         result = find_duplicate_ips(ips)
         self.assertEqual(result, ["192.168.1.2"])
+
+    def test_add_new_ip(self):
+        ips = ["192.168.1.1", "192.168.1.2"]
+        result = add_ip(ips, "192.168.1.3")
+        self.assertTrue(result)
+        self.assertIn("192.168.1.3", ips)
+
+    def test_add_existing_ip(self):
+        ips = ["192.168.1.1", "192.168.1.2"]
+        result = add_ip(ips, "192.168.1.1")
+        self.assertFalse(result)
+        self.assertEqual(len(ips), 2)
