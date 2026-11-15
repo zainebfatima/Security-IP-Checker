@@ -37,50 +37,93 @@ def add_ip(ips, new_ip):
         return True
     return False
 
-ips = []
+def flag_ip(ips, flagged_ips, ip):
+    if ip not in ips:
+        return "IP not found in records."
+    if ip in flagged_ips:
+        return "IP already flagged."
 
-while True:
-    new_ip = input("Enter an IP address (or 'q' to quit): ").strip()
+    flagged_ips.append(ip)
+    return "IP successfully flagged."
 
-    # Exit
-    if new_ip.lower() == "q":
-        break
+if __name__ == "__main__":
+    ips = []
+    flagged_ips = []
 
-    # Check empty input
-    if not new_ip:
-        print("Empty input! Please enter an IP.")
-        continue
+    while True:
+        print("\n1. Add IP")
+        print("2. Flag IP")
+        print("q. Quit")
 
-    # Check IP format
-    checked_ip = check_ip_format(new_ip)
+        choice = input("Choose an option: ").strip()
 
-    if checked_ip in ("Empty input", "Invalid IP format"):
-        print(checked_ip)
-        print("IP rejected!")
-        continue
+        # Exit
+        if choice.lower() == "q":
+            break
 
-    # Validate IP
-    if is_valid_ip(checked_ip):
-        print("Valid IP!")
+        # Add IP
+        if choice == "1":
+            new_ip = input("Enter an IP address: ").strip()
 
-    # Identify IP version
-    version = get_ip_version(checked_ip)
-    print(f"IP Version: IPv{version}")
+            # Check empty input
+            if not new_ip:
+                print("Empty input! Please enter an IP.")
+                continue
 
-    # Check duplicates
-    duplicates = find_duplicate_ips(ips)
+            # Check IP format
+            checked_ip = check_ip_format(new_ip)
 
-    if checked_ip in ips:
-        print("Duplicate IP! Already exists.")
-        continue
+            if checked_ip in ("Empty input", "Invalid IP format"):
+                print(checked_ip)
+                print("IP rejected!")
+                continue
 
-    # Add IP
-    result = add_ip(ips, checked_ip)
+            # Validate IP
+            if is_valid_ip(checked_ip):
+                print("Valid IP!")
 
-    if result:
-        print("IP successfully added!")
+            # Identify IP version
+            version = get_ip_version(checked_ip)
+            print(f"IP Version: IPv{version}")
 
-    print("IP Records:", ips)
+            # Check duplicates
+            if checked_ip in ips:
+                print("Duplicate IP! Already exists.")
+                continue
 
-print("Final IP Records:", ips)
-    
+            # Add IP
+            result = add_ip(ips, checked_ip)
+
+            if result:
+                print("IP successfully added!")
+
+            print("IP Records:", ips)
+
+        # Flag IP
+        elif choice == "2":
+            ip_to_flag = input("Enter an IP address to flag: ").strip()
+
+            # Check empty input
+            if not ip_to_flag:
+                print("Empty input! Please enter an IP.")
+                continue
+
+            # Check IP format
+            checked_ip = check_ip_format(ip_to_flag)
+
+            if checked_ip in ("Empty input", "Invalid IP format"):
+                print(checked_ip)
+                print("IP rejected!")
+                continue
+
+            # Flag IP
+            result = flag_ip(ips, flagged_ips, checked_ip)
+
+            print(result)
+            print("Flagged IPs:", flagged_ips)
+
+        else:
+            print("Invalid choice! Please choose 1, 2, or q.")
+
+    print("\nFinal IP Records:", ips)
+    print("Final Flagged IPs:", flagged_ips)

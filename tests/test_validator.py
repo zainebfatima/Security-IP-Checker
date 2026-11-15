@@ -1,6 +1,6 @@
 import unittest
 
-from ip_checker.validator import is_valid_ip, get_ip_version, check_ip_format, find_duplicate_ips, add_ip
+from ip_checker.validator import is_valid_ip, get_ip_version, check_ip_format, find_duplicate_ips, add_ip, flag_ip
 
 class TestIPValidator(unittest.TestCase):
 
@@ -61,3 +61,26 @@ class TestIPValidator(unittest.TestCase):
         result = add_ip(ips, "192.168.1.1")
         self.assertFalse(result)
         self.assertEqual(len(ips), 2)
+
+    def test_flag_existing_ip(self):
+        ips = ["192.168.1.10"]
+        flagged_ips = []
+
+        result = flag_ip(ips, flagged_ips, "192.168.1.10")
+        self.assertEqual(result, "IP successfully flagged.")
+        self.assertIn("192.168.1.10", flagged_ips)
+
+    def test_flag_nonexistent_ip(self):
+        ips = ["192.168.1.10"]
+        flagged_ips = []
+
+        result = flag_ip(ips, flagged_ips, "10.0.0.5")
+        self.assertEqual(result, "IP not found in records.")
+
+    def test_flag_already_flagged_ip(self):
+        ips = ["192.168.1.10"]
+        flagged_ips = []
+
+        result1 = flag_ip(ips, flagged_ips, "192.168.1.10")
+
+        self.assertEqual(result1, "IP successfully flagged.")
