@@ -1,5 +1,8 @@
 import ipaddress
 
+from ip_checker.storage import load_records, save_records, export_to_csv
+
+
 def is_valid_ip(ip):
     try:
         ipaddress.ip_address(ip)
@@ -47,8 +50,7 @@ def flag_ip(ips, flagged_ips, ip):
     return "IP successfully flagged."
 
 if __name__ == "__main__":
-    ips = []
-    flagged_ips = []
+    ips, flagged_ips = load_records()
 
     while True:
         print("\n1. Add IP")
@@ -97,6 +99,12 @@ if __name__ == "__main__":
             if result:
                 print("IP successfully added!")
 
+                result = add_ip(ips, checked_ip)
+                if result:
+                    print("IP successfully added!")
+                    save_records(ips, flagged_ips)
+                    export_to_csv(ips, flagged_ips)
+
             print("IP Records:", ips)
 
         # Flag IP
@@ -120,6 +128,11 @@ if __name__ == "__main__":
             result = flag_ip(ips, flagged_ips, checked_ip)
 
             print(result)
+
+            if result == "IP successfully flagged.":
+                save_records(ips, flagged_ips)
+                export_to_csv(ips, flagged_ips)
+                print("IP Records:", ips)
             print("Flagged IPs:", flagged_ips)
 
         else:
