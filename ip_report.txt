@@ -1,0 +1,13 @@
+IP Records Report - Generated on 2026-11-15 06:52:39
+==================================================
+Total IPs: 3
+Flagged IPs: 3
+Unflagged IPs: 0
+==================================================
+IP Address		Version		Flagged
+--------------------------------------------------
+192.145.1.1          IPv4          Yes
+8.8.2.8              IPv4          Yes
+192.168.1.9          IPv4          Yes
+IPv4 Addresses: 3
+IPv6 Addresses: 0

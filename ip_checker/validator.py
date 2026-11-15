@@ -10,12 +10,15 @@ def is_valid_ip(ip):
     except ValueError:
         return False
 
+
 def get_ip_version(ip):
     try:
         ip_obj = ipaddress.ip_address(ip)
         return ip_obj.version
     except ValueError:
         return None
+
+
 def check_ip_format(ip):
     ip = ip.strip()
     if not ip:
@@ -23,6 +26,7 @@ def check_ip_format(ip):
     if not is_valid_ip(ip):
         return "Invalid IP format"
     return ip
+
 
 def find_duplicate_ips(ips):
     seen_ips = set()
@@ -34,11 +38,13 @@ def find_duplicate_ips(ips):
             seen_ips.add(ip)
     return list(duplicates)
 
+
 def add_ip(ips, new_ip):
     if new_ip not in ips:
         ips.append(new_ip)
         return True
     return False
+
 
 def flag_ip(ips, flagged_ips, ip):
     if ip not in ips:
@@ -48,6 +54,7 @@ def flag_ip(ips, flagged_ips, ip):
 
     flagged_ips.append(ip)
     return "IP successfully flagged."
+
 
 if __name__ == "__main__":
     ips, flagged_ips = load_records()
@@ -98,12 +105,8 @@ if __name__ == "__main__":
 
             if result:
                 print("IP successfully added!")
-
-                result = add_ip(ips, checked_ip)
-                if result:
-                    print("IP successfully added!")
-                    save_records(ips, flagged_ips)
-                    export_to_csv(ips, flagged_ips)
+                save_records(ips, flagged_ips)
+                export_to_csv(ips, flagged_ips)
 
             print("IP Records:", ips)
 
