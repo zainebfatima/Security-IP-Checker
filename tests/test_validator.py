@@ -84,3 +84,31 @@ class TestIPValidator(unittest.TestCase):
         result1 = flag_ip(ips, flagged_ips, "192.168.1.10")
 
         self.assertEqual(result1, "IP successfully flagged.")
+
+    def test_flag_already_flagged_ip(self):
+        ips = ["192.168.1.10"]
+        flagged_ips = []
+
+        result1 = flag_ip(ips, flagged_ips, "192.168.1.10")
+
+        self.assertEqual(result1, "IP successfully flagged.")
+        result2 = flag_ip(ips, flagged_ips, "192.168.1.10")
+
+        self.assertEqual(result2, "IP already flagged.")
+        self.assertEqual(len(flagged_ips), 1)
+
+    def test_add_empty_ip(self):
+        ips = ["192.168.1.1"]
+
+        result = add_ip(ips, "")
+
+        self.assertFalse(result)
+        self.assertEqual(ips, ["192.168.1.1"])
+
+    def test_add_whitespace_ip(self):
+        ips = ["192.168.1.1"]
+
+        result = add_ip(ips, "   ")
+
+        self.assertFalse(result)
+        self.assertEqual(ips, ["192.168.1.1"])

@@ -40,9 +40,13 @@ def find_duplicate_ips(ips):
 
 
 def add_ip(ips, new_ip):
+    if not new_ip or not new_ip.strip():
+        return False
+
     if new_ip not in ips:
         ips.append(new_ip)
         return True
+
     return False
 
 
