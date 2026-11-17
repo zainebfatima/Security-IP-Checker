@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security IP Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="dashboard">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Security<span>IP</span></h2>
+                <p>IP Management System</p>
+            </div>
+
+            <nav>
+                <a href="#overview" class="nav-link active">Dashboard</a>
+                <a href="#ip-checker" class="nav-link">IP Checker</a>
+                <a href="#recent-activity" class="nav-link">Recent Activity</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Security IP Checker</p>
+                <span>Version 1.0</span>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Monitor and manage your IP addresses.</p>
+                </div>
+
+                <div class="status">
+                    <span class="status-dot"></span>
+                    System Ready
+                </div>
+            </header>
+
+            <!-- OVERVIEW -->
+            <section id="overview">
+                <h2 class="section-title">Overview</h2>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <p>Total IP Checks</p>
+                        <h3>{{ stats.total_ips }}</h3>
+                        <span>All checking attempts</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Valid IP Checks</p>
+                        <h3>{{ stats.valid_ips }}</h3>
+                        <span>Successfully validated</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Flagged IPs</p>
+                        <h3>{{ stats.flagged_ips }}</h3>
+                        <span>Flagged records</span>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- IP CHECKER -->
+            <section id="ip-checker">
+                <h2 class="section-title">IP Address Checker</h2>
+
+                <div class="panel">
+                    <p class="panel-description">
+                        Enter an IP address to validate its format
+                        and identify its IP version.
+                    </p>
+
+                    <form action="/" method="GET">
+                        <label for="ip">IP Address</label>
+
+                        <input
+                            type="text"
+                            id="ip"
+                            name="ip"
+                            placeholder="e.g. 8.8.8.8"
+                            value="{{ entered_ip or '' }}"
+                            required
+                        >
+
+                        <button type="submit">Check IP</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- RESULTS -->
+            <section id="results-section">
+                <h2 class="section-title">IP Check Results</h2>
+
+                <div id="results" class="panel">
+                    {% if result %}
+                        <p>{{ result }}</p>
+                    {% else %}
+                        <p>Your IP check results will appear here.</p>
+                    {% endif %}
+                </div>
+            </section>
+
+            <!-- RECENT ACTIVITY -->
+            <section id="recent-activity">
+                <h2 class="section-title">Recent Activity</h2>
+
+                <div class="panel">
+
+                    <p class="panel-description">
+                        Review your IP checking history and filter
+                        results by validation status.
+                    </p>
+
+                    <!-- HISTORY FILTERS -->
+                    <div class="history-filters">
+
+                        <a href="/?filter=All#recent-activity"
+                           class="{% if selected_filter == 'All' %}active{% endif %}">
+                            All
+                        </a>
+
+                        <a href="/?filter=Valid#recent-activity"
+                           class="{% if selected_filter == 'Valid' %}active{% endif %}">
+                            Valid IPs
+                        </a>
+
+                        <a href="/?filter=Invalid#recent-activity"
+                           class="{% if selected_filter == 'Invalid' %}active{% endif %}">
+                            Invalid IPs
+                        </a>
+
+                    </div>
+
+                    <!-- HISTORY TABLE -->
+                    {% if history %}
+
+                    <div class="history-table-wrapper">
+                        <table class="history-table">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>IP Address</th>
+                                    <th>Status</th>
+                                    <th>IP Version</th>
+                                    <th>Checked At</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for record in history %}
+                                <tr>
+                                    <td>{{ record[0] }}</td>
+                                    <td>{{ record[1] }}</td>
+
+                                    <td>
+                                        <span class="history-status {{ record[2]|lower }}">
+                                            {{ record[2] }}
+                                        </span>
+                                    </td>
+
+                                    <td>{{ record[3] }}</td>
+                                    <td>{{ record[4] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    {% else %}
+
+                    <p>No activity found for this filter yet.</p>
+
+                    {% endif %}
+
+                </div>
+            </section>
+
+            <footer class="footer">
+                <p>
+                    Security IP Checker |
+                    Built for IP validation and management
+                </p>
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
