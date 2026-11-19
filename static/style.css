@@ -1,3 +1,6 @@
+html {
+    scroll-behavior: smooth;
+}
 /* ===== GLOBAL SETTINGS ===== */
 
 * {
@@ -369,4 +372,21 @@ button:hover {
 .history-status.invalid {
     color: #F87171;
     background-color: #451A1A;
+}
+/* ===== IP RESULT NOTIFICATIONS ===== */
+
+.success-message {
+    color: #14B8A6;
+    background-color: #134E4A;
+    border: 1px solid #14B8A6;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.error-message {
+    color: #F87171;
+    background-color: #451A1A;
+    border: 1px solid #F87171;
+    padding: 15px;
+    border-radius: 8px;
 }

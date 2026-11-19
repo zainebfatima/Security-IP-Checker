@@ -80,6 +80,7 @@
                         Enter an IP address to validate its format
                         and identify its IP version.
                     </p>
+                    <input type="text" id="historySearch" placeholder="Search IP addressess...">
 
                     <form action="/" method="GET">
                         <label for="ip">IP Address</label>
@@ -103,12 +104,12 @@
                 <h2 class="section-title">IP Check Results</h2>
 
                 <div id="results" class="panel">
-                    {% if result %}
-                        <p>{{ result }}</p>
-                    {% else %}
-                        <p>Your IP check results will appear here.</p>
-                    {% endif %}
-                </div>
+    {% if result %}
+        <p id="resultMessage">{{ result }}</p>
+    {% else %}
+        <p>Your IP check results will appear here.</p>
+    {% endif %}
+</div>
             </section>
 
             <!-- RECENT ACTIVITY -->
@@ -197,5 +198,6 @@
 
         </main>
     </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
