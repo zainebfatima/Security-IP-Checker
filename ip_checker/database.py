@@ -128,12 +128,18 @@ def get_dashboard_stats():
     """)
     flagged_ips = cursor.fetchone()[0]
 
+    cursor.execute("""
+        SELECT COUNT(*) FROM ip_records
+    """)
+    unique_ips = cursor.fetchone()[0]
+
     connection.close()
 
     return {
-        "total_ips": total_ips,
-        "valid_ips": valid_ips,
-        "flagged_ips": flagged_ips
+        "total_checks": total_ips,
+        "valid_checks": valid_ips,
+        "flagged_ips": flagged_ips,
+        "unique_ips": unique_ips
     }
 
 

@@ -51,14 +51,14 @@
                 <div class="stats-grid">
 
                     <div class="stat-card">
-                        <p>Total IP Checks</p>
-                        <h3>{{ stats.total_ips }}</h3>
+                        <p>Total  Checks</p>
+                        <h3>{{ stats.total_checks }}</h3>
                         <span>All checking attempts</span>
                     </div>
 
                     <div class="stat-card">
-                        <p>Valid IP Checks</p>
-                        <h3>{{ stats.valid_ips }}</h3>
+                        <p>Valid Checks</p>
+                        <h3>{{ stats.valid_checks }}</h3>
                         <span>Successfully validated</span>
                     </div>
 
@@ -66,6 +66,12 @@
                         <p>Flagged IPs</p>
                         <h3>{{ stats.flagged_ips }}</h3>
                         <span>Flagged records</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Unique IPs</p>
+                        <h3>{{ stats.unique_ips }}</h3>
+                        <span>Distinct IP addresses stored</span>
                     </div>
 
                 </div>
